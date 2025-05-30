@@ -1,41 +1,35 @@
-# Scalable Web Application with ALB and Auto Scaling on AWS
-
-This project demonstrates deploying a secure and scalable EC2-based web application using AWS services like Application Load Balancer (ALB), Auto Scaling Groups (ASG), and CloudWatch.
-
-## Use Case
-
-Ideal for applications requiring:
-- High availability
-- Elastic scalability
-- Cost optimization
+# Scalable Web App with ALB + ASG
 
 ## Architecture
+![Architecture Diagram](docs/architecture.png)
 
-- EC2 Instances
-- ALB
-- ASG
-- RDS (optional)
-- CloudWatch & SNS
-- IAM Roles
+## Features
+- Auto-scaling EC2 instances
+- Application Load Balancer
+- Multi-AZ deployment
+- CloudWatch monitoring
+- Optional RDS database
 
-## Deployment Steps
+## Deployment Options
 
-1. Clone the repository.
-2. Launch infrastructure manually or using CloudFormation.
-3. Upload app files to EC2.
-4. Configure monitoring and scaling.
+### Terraform
+```bash
+cd infrastructure/terraform
+terraform init
+terraform apply
+```
 
-## Learning Outcomes
+### CloudFormation
+```bash
+aws cloudformation deploy \
+  --template-file infrastructure/cloudformation/webapp-stack.yaml \
+  --stack-name webapp \
+  --capabilities CAPABILITY_IAM
+```
 
-- High availability using ALB and ASG
-- Auto Scaling with CloudWatch
-- IAM-based access control
-- RDS integration (optional)
+### Testing
+Get ALB DNS name from AWS Console and test using:
 
-## License
-
-MIT License
-
-## Contributions
-
-Please read the Code of Conduct before contributing.
+```bash
+ab -n 1000 -c 100 http://ALB-DNS/
+```
